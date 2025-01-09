@@ -12,10 +12,17 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-image: url('81310.jpg'); /* Substitua pelo caminho da sua imagem */
+    background-size: cover; /* A imagem cobrirá toda a página */
+    background-repeat: no-repeat; /* Impede a repetição da imagem */
+    background-position: center; /* Centraliza a imagem */
+    
+    
 }
 
 .container {
     text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 h1 {
@@ -36,7 +43,7 @@ h1 {
     font-size: 16px;
     text-decoration: none;
     color: #fff;
-    background-color: #007bff;
+    background-color: #ff0000;
     border-radius: 5px;
     transition: background-color 0.3s ease, transform 0.2s ease;
     overflow: hidden; /* Necessário para o efeito de onda */
@@ -44,7 +51,7 @@ h1 {
 }
 
 .button:hover {
-    background-color: #0056b3;
+    background-color: #e89696;
 }
 
 .button:active {
