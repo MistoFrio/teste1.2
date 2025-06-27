@@ -4,420 +4,828 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prod10</title>
+    <title>Prod10 - Sistema de Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-image: url('81310.jpg'); /* Substitua pelo caminho da sua imagem */
-            background-size: cover; /* A imagem cobrirá toda a página */
-            background-repeat: no-repeat; /* Impede a repetição da imagem */
-            background-position: center; /* Centraliza a imagem */
-            height: 100vh;
-
-
-            
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        form {
-            width: 300px;
-            margin: 100px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h3 {
-            margin-top: 20;
-            font-size: 24px;
-            color: #ea5656;
-            margin-left: 25%;
-            
-        }
-
-        input[type="text"],
-        input[type="password"] {
+        /* Animated background particles */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-            font-size: 16px;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
         }
 
-        input[type="submit"] {
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .particle:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 60px; height: 60px; left: 20%; animation-delay: 1s; }
+        .particle:nth-child(3) { width: 40px; height: 40px; left: 70%; animation-delay: 2s; }
+        .particle:nth-child(4) { width: 100px; height: 100px; left: 80%; animation-delay: 3s; }
+        .particle:nth-child(5) { width: 50px; height: 50px; left: 50%; animation-delay: 4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+            50% { transform: translateY(-100px) rotate(180deg); opacity: 0.3; }
+        }
+
+        .login-container {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 48px 40px;
             width: 100%;
-            padding: 10px;
-            background-color: #929292;
-            color: #000000bb;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.5s;
+            max-width: 420px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideUp 0.8s ease-out;
         }
 
-        input[type="submit"]:hover {
-            background-color: rgb(219, 220, 228);
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .forgot-password-btn {
-            color: #007bff;
-            text-decoration: none;
-            font-size: 14px;
-        }
-        .forms {
-            display: block;
+        .logo-section {
             text-align: center;
-            color: #0000ff;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: bold;
+            margin-bottom: 40px;
         }
 
-        .forgot-password-btn:hover {
+        .logo-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .logo-icon i {
+            font-size: 36px;
+            color: white;
+        }
+
+        .login-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .login-subtitle {
+            font-size: 16px;
+            color: #718096;
+            font-weight: 400;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #4a5568;
+            margin-bottom: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a0aec0;
+            font-size: 18px;
+            transition: color 0.3s ease;
+            z-index: 2;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 16px 16px 52px;
+            font-size: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            background: #f7fafc;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            color: #2d3748;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .form-input:focus + .input-icon,
+        .form-input:not(:placeholder-shown) + .input-icon {
+            color: #667eea;
+        }
+
+        .form-input::placeholder {
+            color: #a0aec0;
+            font-weight: 400;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 32px;
+        }
+
+        .forgot-password a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .forgot-password a:hover {
+            color: #5a67d8;
             text-decoration: underline;
         }
-        h3 {
-    margin-top: 20;
-    font-size: 24px;
-    color: #333;
-    margin-left: 35%;
-}
 
+        .login-button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .login-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .login-button:hover::before {
+            left: 100%;
+        }
+
+        .loading {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .loading.active {
+            display: flex;
+        }
+
+        .loading.active ~ .button-text {
+            display: none;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background: #fed7d7;
+            color: #c53030;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-top: 16px;
+            border-left: 4px solid #e53e3e;
+            display: none;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .success-message {
+            background: #c6f6d5;
+            color: #2f855a;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-top: 16px;
+            border-left: 4px solid #38a169;
+            display: none;
+        }
+
+        /* Responsive design */
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 20px;
+                padding: 32px 24px;
+            }
+            
+            .login-title {
+                font-size: 24px;
+            }
+            
+            .logo-icon {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .logo-icon i {
+                font-size: 28px;
+            }
+        }
+
+        /* Input validation styles */
+        .form-input.error {
+            border-color: #e53e3e;
+            background: #fed7d7;
+        }
+
+        .form-input.success {
+            border-color: #38a169;
+            background: #c6f6d5;
+        }
+
+        /* Accessibility improvements */
+        .form-input:focus-visible {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+        }
+
+        .login-button:focus-visible {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+        }
     </style>
 </head>
 <body>
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
 
-    <form>
-        
-        <h3>Login</h3>
-      
+    <div class="login-container">
+        <div class="logo-section">
+            <div class="logo-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h1 class="login-title">Prod10</h1>
+            <p class="login-subtitle">Sistema de Relatório de Produção</p>
+        </div>
 
-        <input type="text" placeholder="Usuário" id="login" oninput="validateNumber(this)">
-        <input type="password" placeholder="Senha" id="senha">
-        <script>
-            function validateNumber(input) {
-              input.value = input.value.replace(/[^0-9]/g, '');
-            }
-          </script>
-          
-        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="login" class="form-label">CPF do Usuário</label>
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        id="login" 
+                        class="form-input" 
+                        placeholder="Digite seu CPF"
+                        maxlength="11"
+                        required
+                        autocomplete="username"
+                    >
+                    <i class="fas fa-user input-icon"></i>
+                </div>
+            </div>
 
-        <a href="https://wa.me/31990809638/?text=Esqueci%20a%20minha%20senha.%20Por%20favor,%20envie%20instruções%20para%20recuperá-la. " class="forgot-password-btn">Esqueceu a sua senha?</a>
-     
+            <div class="form-group">
+                <label for="senha" class="form-label">Senha</label>
+                <div class="input-wrapper">
+                    <input 
+                        type="password" 
+                        id="senha" 
+                        class="form-input" 
+                        placeholder="Digite sua senha"
+                        required
+                        autocomplete="current-password"
+                    >
+                    <i class="fas fa-lock input-icon"></i>
+                </div>
+            </div>
 
-        <input type="submit" value="Login" onclick="logar(); return false;">
-        
+            <div class="forgot-password">
+                <a href="https://wa.me/31990809638/?text=Esqueci%20a%20minha%20senha.%20Por%20favor,%20envie%20instruções%20para%20recuperá-la." target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    Esqueceu sua senha?
+                </a>
+            </div>
 
+            <button type="submit" class="login-button" id="loginBtn">
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <span>Entrando...</span>
+                </div>
+                <span class="button-text">
+                    <i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i>
+                    Entrar no Sistema
+                </span>
+            </button>
 
-    </form>
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
+        </form>
+    </div>
 
     <script>
-        var funcionarios = {
-            "10724545808": "https://sheet.zohopublic.com/sheet/publishedrange/8d0da2ef261ec7f6b8305fa440bccf79cb151f704698302d55b13b06281231ea?type=grid", //0.1
-            "05781135626": "https://sheet.zohopublic.com/sheet/publishedrange/f93ecd0f784cc6996210be2bf420043aac1ce44957738c8ae23fadacf03813e7?type=grid", //188 Adriano
-            "04715367688": "https://sheet.zohopublic.com/sheet/publishedrange/ef6c028488090be7752c05a1350befe3a1e968e144411dcfe7c290e0030d9d21?type=grid", //0.3 AGNALDO
-            "89262557604": "https://sheet.zohopublic.com/sheet/publishedrange/aefb98c17937ec59ccd0d36fade914974abd91af2cf7c454a1872636cdd891c0?type=grid", //0.4 AGOSTINHO 
-            "83491635691": "https://sheet.zohopublic.com/sheet/publishedrange/5406bae4e660e03f691c20a30170850bf63f698e4f6a70f7876059bd8c80a9a4?type=grid", //0.5 ALESSANDRO
-            "87931494687": "https://sheet.zohopublic.com/sheet/publishedrange/bf1dbea755a2243f18cc1a6a1be65de700b819f9f4d1fc4e6f8b1cf612988abd?type=grid", //0.6 ALEX VIEIRA
-            "71095652206": "https://sheet.zohopublic.com/sheet/publishedrange/797476e059fed27832ddfa79c03185a5b4c6f8882f62e2b9d4735664a99312e5?type=grid", //0.9 ALEXANDER 
-            "05095055627": "https://sheet.zohopublic.com/sheet/publishedrange/d2fc584adb6d1aae62c670dbf732e3d960d97099c8e62e0fed9b345ca84fc55c?type=grid", //0.10 ALLISON
-            "14045578650": "https://sheet.zohopublic.com/sheet/publishedrange/6f52fc4158ceeb5c7a4803407e79c7be6c1d579831e1639dff87cfd50359b98c?type=grid", //0.11 ANANIAS 
-            "84533560172": "https://sheet.zohopublic.com/sheet/publishedrange/0b4782ad35204006aa22257218e216fdf8c2a636c9dcee9861a0da4eb3224051?type=grid", //0.14 APARECIDO
-            "02285111606": "https://sheet.zohopublic.com/sheet/publishedrange/fb76d426636a974a6924966210e651128c3e8dd45c05fcc7760ba45ff6c26585?type=grid", //0.15 BRENO. M 
-            "03624128639": "https://sheet.zohopublic.com/sheet/publishedrange/705453618f3b3eddd6ccb1525aff7913448646cad90e9cd588016d0fd2f5518e?type=grid", //0.16 CARLINOD
-            "11038817609": "https://sheet.zohopublic.com/sheet/publishedrange/cd1646334feedb7d1b02889cc88d3a398b1deb2a2834e404149b8b9e69d1a0f0?type=grid", //0.17 CARLOS ALEXANDRE
-            "05095170647": "https://sheet.zohopublic.com/sheet/publishedrange/0a0d1be0cd363cafc53733db0724e9a2936acf7ce2adfd655f171b885350e21e?type=grid", //0.18 CARLOS EDUARDO
-            "04489672608": "https://sheet.zohopublic.com/sheet/publishedrange/c1cf6d08205a25ee0f43444aecdcba1d2253ce3423dea185a3d6b1d9e959021c?type=grid", //0.20 CLAUDIO I 
-            "14416399693": "https://sheet.zohopublic.com/sheet/publishedrange/98d3ffb3d4f9f0ff59d0cf304afa2c49e3a7abca5a5fb07a84a2f708bdffdc01?type=grid", //0.22 DANIEL
-            "09842867641": "https://sheet.zohopublic.com/sheet/publishedrange/f859a180ba85251b8f44ba47e2888df9432703a2a3358a5387c303d51368acbd?type=grid", //0.23 DARCILIO
-            "57837805372": "https://sheet.zohopublic.com/sheet/publishedrange/3a407f0095d82514b8bf482bf72b41a51ee072953f925fddc53d7474aa806051?type=grid", //0.24 DELMAR 
-            "14165008630": "https://sheet.zohopublic.com/sheet/publishedrange/eced9e277e827026c82144a92642eacb04d2425a34803bff254099fb6a2742df?type=grid", //0.25 DIEGO
-            "16581100641": "https://sheet.zohopublic.com/sheet/publishedrange/437c19f98922f384b398123e22dfc148f8858c5457c8774942e69b87e180d186?type=grid", //0.27 DOUGLAS
-            "17205361630": "https://sheet.zohopublic.com/sheet/publishedrange/d64418ecf1a96e86d42705a37645c0a8bfda12482e65246136c6b4e0fc060a64?type=grid", //0.28 DOUGLAS JUNIO 
-            "09358465654": "https://sheet.zohopublic.com/sheet/publishedrange/532c997beab071990045c983656df0cdd444167d59de03113a32c400c265c0eb?type=grid", //0.30 DOUGLAS WALLACE 
-            "71197083251": "https://sheet.zohopublic.com/sheet/publishedrange/b00cecc22129d88dcfcd280f65f42986faf4d17a4b5a296c3ac8b76a32ccdcb1?type=grid", //0.32 EDWIN 
-            "77738063653": "https://sheet.zohopublic.com/sheet/publishedrange/45968313cbc86d319419cbb22e68c42f5d819162861a2fd2226b831cf8f4c4ff?type=grid", //0.37 FRANCISCO SALES 
-            "07060857605": "https://sheet.zohopublic.com/sheet/publishedrange/77973aeee94ac126576045546d2393ea38afd3ae42f71b377fbe7cd6c7dda71b?type=grid", //0.38 GILMAR GOMES 
-            "14501942657": "https://sheet.zohopublic.com/sheet/publishedrange/34e241d08502fa85e80aaea60f58db25f1c7b1297aefcbb242078a4255f49c4e?type=grid", //0.41 GUILHERME HENRIQUE 
-            "02104434645": "https://sheet.zohopublic.com/sheet/publishedrange/7a9e8f3e8ecd8874f604f79a81c0fcdc0c5c48cd63df84f1975b15080e21ab39?type=grid", //0.43 GUSTAVO MONTEIRO 
-            "12755950650": "https://sheet.zohopublic.com/sheet/publishedrange/c8c9ab6cd9465e92eaae47399d745a74c5306fe44c612a4d9f9139cfbf3151d2?type=grid", //0.44 IGOR MONTEIRO 
-            "02070377601": "https://sheet.zohopublic.com/sheet/publishedrange/bdf4e1924b7e2081fa05ccc62c84e2b1a6ea69299d1aa1a668e696ca9fa6357d?type=grid", //0.45 ISRAEL DA SILVA 
-            "68351780600": "https://sheet.zohopublic.com/sheet/publishedrange/ec67fd41466dd5e7e9b04c4aeb167515a3699f2335f8aca5290ed57bd0943169?type=grid", //0.46 JAIR SILVEIRA 
-            "09297713629": "https://sheet.zohopublic.com/sheet/publishedrange/68d3753867b432b1f97c8b4e31514db26608a095c063a9b5da6151b54b9d62a5?type=grid", //0.48 JECKSON GOMES 
-            "03661796674": "https://sheet.zohopublic.com/sheet/publishedrange/60140a8a878c2c88514a8bf4f110c42f20bac6b1d8e4d5a03ce36a46639fbcd1?type=grid", //0.49 JERRI
-            "63840782600": "https://sheet.zohopublic.com/sheet/publishedrange/7958fbd5481eb089ae07c3d65ca95d9a7ff8e8af54026311b5e1963c369e64ad?type=grid", //0.50 JESSE 
-            "02285104650": "https://sheet.zohopublic.com/sheet/publishedrange/17a5ea5d3cb36b35050ab88fc80d11c5f8637d3e61b50d7415bbae3135991316?type=grid", //0.52 João Victor 
-            "01267479620": "https://sheet.zohopublic.com/sheet/publishedrange/e28a1b89a013fbfb28456a6d2511864c6b26fa3b31b5949133993df665b095b4?type=grid", //0.57 COLETA 
-            "03246589666": "https://sheet.zohopublic.com/sheet/publishedrange/b13c086d3d1f5c90d00b619252b0681652ffccded68e9c94909f89a2d886c56e?type=grid", //0.58 JOSE PAULO 
-            "96297905649": "https://sheet.zohopublic.com/sheet/publishedrange/b7166bb9a3fff073c3ac642924a9565243e6bf43f8cd447f5a048535a26c6b6c?type=grid", //0.60 JUAREZ 
-            "08919711577": "https://sheet.zohopublic.com/sheet/publishedrange/33ff4be058d6c8242b34593285fc3409f13f9d0c7be57e0205c9af97999ef45c?type=grid", //0.61 JULIANO 
-            "78117992604": "https://sheet.zohopublic.com/sheet/publishedrange/c5507159577f38207291fd4959e3e9866a537b7eaf8672149ee97aabbf6711dc?type=grid", //0.62 JULIO 
-            "07089072614": "https://sheet.zohopublic.com/sheet/publishedrange/c471d9d570f1b01c6505bebe99f07dcb0d398363a28dda1aa49bfb0189a51c64?type=grid", //0.63 JUNIO 
-            "10068713657": "https://sheet.zohopublic.com/sheet/publishedrange/b96bd28100334d640d7dcc0bc05e805fff635aba4f93d605d089de70a3ed31b3?type=grid", //0.66 LUCIANO SIMOA 
-            "05616002607": "https://sheet.zohopublic.com/sheet/publishedrange/0b31c4b04f9909dceaaf10abe54335a08bd2544368dcd672abe136c42a75f0a1?type=grid", //0.67 LUCIANO VINCIIUS 
-            "07316544635": "https://sheet.zohopublic.com/sheet/publishedrange/2b63d494126b7b586d0a2c2a9064906c52f12fe83f9555054cb264d57da1449c?type=grid", //0.68 LUIZ CARLOS JESUS 
-            "70316269603": "https://sheet.zohopublic.com/sheet/publishedrange/75b0759a6549374509e60fd90a819629deb8a6b004d64d4a85795a7b32cd1dab?type=grid", //0.69 LUIZ HENRIQUE 
-            "12060789605": "https://sheet.zohopublic.com/sheet/publishedrange/fc66eb67343c45fa67787d4f89d43e388f5153b516d19df4aef3e46f6a7c5f0e?type=grid", //0.70 MARCELO DOS SANTOS 
-            "67331904604": "https://sheet.zohopublic.com/sheet/publishedrange/dd4c85236f9278848944d32adfbea461cb979cc2af10e6ecc7618a19a90051c6?type=grid", //0.71 MARCIO JOSE 
-            "14258052647": "https://sheet.zohopublic.com/sheet/publishedrange/5a48381487558ce9a542a57ca5446fec24b6271e45e23e8b31d098604f6ce671?type=grid", //0.72 MARCOS EDUARDO 
-            "14800370604": "https://sheet.zohopublic.com/sheet/publishedrange/cdb680a8a3c86dbf150c3b9688add3a9d9dc4fdcbbe976279a33abd1defcb7eb?type=grid", //0.74 MARLON 
-            "14676238657": "https://sheet.zohopublic.com/sheet/publishedrange/34687e9069b598b5734a855ebbde0f2c9c56e689d0fe0a21e35ffdf3f8ce3593?type=grid", //0.75 MATEUS 
-            "13735769608": "https://sheet.zohopublic.com/sheet/publishedrange/c1595d6cc15d88b489c3f052fd2b32938344ba6a4ba2c3122f7784fa7a870df1?type=grid", //0.76 MAURICIO
-            "13109538644": "https://sheet.zohopublic.com/sheet/publishedrange/8e68deb60fa67bf6f73633b42d86c2dbada44fc9f62583faf96bb5f08db564bd?type=grid", //0.77 MICHAEL
-            "17421529616": "https://sheet.zohopublic.com/sheet/publishedrange/2bc1636fc5d32c0aee464b58da048dbf2c1c99e248705cdc7e9314f308710260?type=grid", //0.79 MIKE VINICIUS 
-            "13432388624": "https://sheet.zohopublic.com/sheet/publishedrange/6e913526a539b6102238626e0f8dce746c9047c50547e94d42243f93eb2ace35?type=grid", //0.80 NADSON 
-            "04018693699": "https://sheet.zohopublic.com/sheet/publishedrange/1b266def772e4a6da49ad5aa67fa3bf32c1dc85abba50f2df2396a1161fcf8dd?type=grid", //0.82 NORIVAS 
-            "13942915669": "https://sheet.zohopublic.com/sheet/publishedrange/ebdb480c90c5fc75ada38326703518ed23a4173ace186392730cfda49fbde9f4?type=grid", //0.84 PAULO S PARAGUASSU
-            "04841095454": "https://sheet.zohopublic.com/sheet/publishedrange/45f540007253c9bccedcbb701ce4cdaffe3ac3d19eb5f7689238b12df96bf5a2?type=grid", //0.85 PAULO THIAGO SEVERO
-            "15615463643": "https://sheet.zohopublic.com/sheet/publishedrange/5109b61e658bd26dc30f4648f1c216f2e1dac0490ea7939b4c3c717b65cd5451?type=grid", //0.86 PEDRO HENRIQUE 
-            "41802209620": "https://sheet.zohopublic.com/sheet/publishedrange/76b84b20e5b9416893f2784074c209bb74159de7f34b7da17e47e16c90652166?type=grid", //0.89 RAIMUNDO 
-            "14251564600": "https://sheet.zohopublic.com/sheet/publishedrange/0457ab1389fb4ab42a23d8323c31f2b72ff71307eb20bed0b78b29c7cd153ad6?type=grid", //0.90 REINALDO 
-            "10858662620": "https://sheet.zohopublic.com/sheet/publishedrange/719a1ea662b04bf5adb4cae90cc8b93c6a6c9485c16726426d28ba17c5ee3e72?type=grid", //0.91 RENATO M 
-            "02360300601": "https://sheet.zohopublic.com/sheet/publishedrange/de6e2ef6dfd41283c897faec9fa93f5fe5b9d8868a6a5eafb914dda0514cad50?type=grid", //0.93 RENATO V 
-            "10800237633": "https://sheet.zohopublic.com/sheet/publishedrange/7819f34c64a460ecf71876305911c97b2ddbf06204ea777ca251efb86cc46ac3?type=grid", //0.94 RODRIGO 
-            "14895385698": "https://sheet.zohopublic.com/sheet/publishedrange/5ba8b1c8f70141deca5223078d50a738fa77cbd256901af0a2f511ef4f3279c0?type=grid", //0.96 SANCLER 
-            "05895020690": "https://sheet.zohopublic.com/sheet/publishedrange/079f0585176bd259533827f22a9a37e4b6f574518abc4dbbd6a50811d8a6aa51?type=grid", //0.98 STENIO
-            "65068882615": "https://sheet.zohopublic.com/sheet/publishedrange/7c848a6b37952fcd2e9b65ecb9b71278d844d2c7eb08964e35a44621864e49f3?type=grid", //0.99 TALES 
-            "12149681633": "https://sheet.zohopublic.com/sheet/publishedrange/47b9996eba47b054c3787cf6743b388d5f02fa53e1530186c0b15090f7eb76bb?type=grid", //0.102 VALTER 
-            "11400241677": "https://sheet.zohopublic.com/sheet/publishedrange/73677db395670a22e8ad5287de2c7cbe15086da6fe49032ee036a2e31ed977c1?type=grid", //0.105 WALARD LINO
-            "08870130584": "https://sheet.zohopublic.com/sheet/publishedrange/c0b0dcbdcb0441c6c1cfc4a18393489e0f2692979d2bc314e781e976c8e530d6?type=grid", //0.107 WARLEY 
-            "00068904665": "https://sheet.zohopublic.com/sheet/publishedrange/d4ae8a9bb494aad85fa9ae821e7dd54fcc4e4e05f197e15e278804074a59853e?type=grid", //0.108 WELBERT 
-            "01235949605": "https://sheet.zohopublic.com/sheet/publishedrange/17dc700155eccc9273ad690545d467ec4e8597c9b74fe5041776a8c9fa824fc9?type=grid", //0.109 WELTON 
-            "13795063604": "https://sheet.zohopublic.com/sheet/publishedrange/00a487add3fa42352c36e780818416270ca296c9184c7da8eb4952894d70a8d6?type=grid", //0.110 WILLIAN BARBOSA
-            "11389201694": "https://sheet.zohopublic.com/sheet/publishedrange/f69e1a0f8b0e5311c8c7c457781285fee3b2fc4f85e917510223e95ece559c13?type=grid", //0.111 WILLIAN F 
-            "14886779646": "https://sheet.zohopublic.com/sheet/publishedrange/a0f08df426c29d859ba8f5502d20a5968c9227fc7a0e16be38f553ad9f4cea0b?type=grid",//0.114 JOAO P PASCOAL
-            "10387784683": "https://sheet.zohopublic.com/sheet/publishedrange/b509bed6164269b7dc2d6c388c4e0b4462bea9799c24de9e1912077ec9d16129?type=grid",//0.113 CARLOS ANDRE 
-            "15438288682": "https://sheet.zohopublic.com/sheet/publishedrange/c7b75157dcce90c0da490fb4c48cdd03d43043ff93ea528ced949e3bbc17d5d3?type=grid",// 0.115 LEANDRO CORREA
-            "seucpf":"https://sheet.zohopublic.com/sheet/publishedrange/4d3d75f6b562e802525a847a3da3d7d62cfbc16210dfa64e229578aee98c765f?type=grid",
-            "17762224661":"https://sheet.zohopublic.com/sheet/publishedrange/e908f99f95142deff4968a46883e8f7d18c2f98a2cc38b20dffe28bdde1cb403?type=grid", //121 LUIZ FELIPE 
-            "12883036616":"https://sheet.zohopublic.com/sheet/publishedrange/c624562bcb9389b25d50bea630510b594fdd199655eedb3a73162a14d6d6e6e7?type=grid", //120 WALLACE 
-            "94303495620":"https://sheet.zohopublic.com/sheet/publishedrange/27c4e42c97f56b8059c7d113c87e4160d7057abb9b7206b9fa518d12974069d7?type=grid", //122 ADEMILSON
-            "02494781450":"https://sheet.zohopublic.com/sheet/publishedrange/bd23e6135bfa108c8e6f8fe9c964f14821123dd447336d415c4ff33f4e88aa7a?type=grid", //126 gerson 
-            "12947219686":"https://sheet.zohopublic.com/sheet/publishedrange/fbfbc8b0797f07e29ead56bcbf8573151a8ab3913089afff16ce5ed876990dd1?type=grid", //0.127 FILIPE 
-            "14316251678":"https://sheet.zohopublic.com/sheet/publishedrange/c1d5aa242f01b6e76f644580a4337c130637abb17541016f1fb8905db748be0b?type=grid", //0.125 ally son 
-            "01821936671":"https://sheet.zohopublic.com/sheet/publishedrange/20dbf03ff44ee5112b409e8358e019d974b475e6d9bd7b01995f9dbf5675a461?type=grid", //0.131 GIANDERSON 
-            "12595879677":"https://sheet.zohopublic.com/sheet/publishedrange/488211a6446e819a20c58f58c871d948e7e24fc4f9075df754f6e11f888ce631?type=grid", //0.133 LEONARDO RAMOS 
-            "19165077601":"https://sheet.zohopublic.com/sheet/publishedrange/b5345aae5692b992ff3fa4b29e2cc0df1a193d6939e56f8a896f04934dadf925?type=grid", //0.137 julio inacio4
-            "09566573626":"https://sheet.zohopublic.com/sheet/publishedrange/b5643b044b6797f73096c7441db90e20988dadb36a7eb238a0409eee40620c90?type=grid", //0.140 PAULO HENRIQUE 
-            "00782184626":"https://sheet.zohopublic.com/sheet/publishedrange/3201bf5a9b669fcd21ca125b699bedd56c4b8c0247c2732c4b751bc3016bcdad?type=grid", //0.142 ADILSON 
-            "00157078655":"https://sheet.zohopublic.com/sheet/publishedrange/b24c7f206769af7375c938b385b8b8530cbfda02998ea30c88cef2c27492461d?type=grid", //0.147 MARCELINO
-            "15558858702":"https://sheet.zohopublic.com/sheet/publishedrange/0321f04fba6e669c0479cd4289f09b8ffa6831720bb823a36807a5d4b9321bb9?type=grid", //0.149 ALEXANDRE BARBOSA 
-            "02185744607":"https://sheet.zohopublic.com/sheet/publishedrange/7303144e319ed8ab2e9287449080ffd436dd965b3bcbf04d1b580fbb590bdb97?type=grid", //0.150FAYLON 
-            "cpf":"link", //0.000
-            "05990209622":"https://sheet.zohopublic.com/sheet/publishedrange/7234fd3435c491efeda5887ae2a64657b84cd284a7bb88aba5a7dd69d4fe256a?type=grid", //Willian quaresma 151
-            "17446379626":"https://sheet.zohopublic.com/sheet/publishedrange/940588076d0465ab1befc8cf291ee007cf598415be33895133f76861c1653471?type=grid", //Wilton de Jesus 153
-            "16806028616":"https://sheet.zohopublic.com/sheet/publishedrange/9663cc2e23244ca5a160e62acb6740589c43e0a81f4966184429d498b466cc2b?type=grid", //guilherme almeida 154 
-            "01067563628":"https://sheet.zohopublic.com/sheet/publishedrange/1c3ada2afd3e45ac0b0a2e23ce01d3a216e939f9c3b0784d59f215974783f0cb?type=grid", // Eleazar 155
-            "02215370661":"https://sheet.zohopublic.com/sheet/publishedrange/f6c1ae40311fb5d249e7d8a2f2a87a0e6892ac04c42db18a157ac550a013d906?type=grid", //157 Gabriel alves 
-            "13758323606":"https://sheet.zohopublic.com/sheet/publishedrange/b66a6a6b4e7e3957ced62baea159e32f2a6be19243a2c873bd3ee2688c9c6f4e?type=grid", //Oseias da Silva //158 
-            "10912073640":"https://sheet.zohopublic.com/sheet/publishedrange/cdf473466b0439d22c0c61007dbc650ceac2c456dd5ade4f8ea76dd6ee65edc2?type=grid", //Kaique Vitor 
-            "01114542636":"https://sheet.zohopublic.com/sheet/publishedrange/ae1e8d5e3ad727e9f2ae49c884a21f94f541404dff4bbf95bf55e75e7060c2c9?type=grid", // yomsar jose 162
-            "03518627651":"https://sheet.zohopublic.com/sheet/publishedrange/6595c390b88286a198de586449485181b7f6ed05b67c0bd9cede0be02041f177?type=grid", //DICKSON 163 
-            "17338882681":"https://sheet.zohopublic.com/sheet/publishedrange/938146d927f1fa5a7fbd9178cc34f6a20f2fd6b8660d251ff0e32582c947c3be?type=grid", //Rafael de Souza Andrade 164
-            "09062739784":"https://sheet.zohopublic.com/sheet/publishedrange/b0526a836c177a5592ed09dd68928dcb468fef9d57c131c67024346456bf6715?type=grid", //Saulo Roriz de Assis 165
-            "70804910294":"https://sheet.zohopublic.com/sheet/publishedrange/2cf0dba01ae5930f53a5dea8899f8e4d27fc65c0bcdc7de57adcb4fe5fb52a17?type=grid", // Enso Henrique Hernandez 166
-            "08369953336":"https://sheet.zohopublic.com/sheet/publishedrange/59ed09c44efc78190fd7ac3334c967442ac3b6e386f901b919e60930492dab1a?type=grid", //danielson santos campelo 168
-            "12595893661":"https://sheet.zohopublic.com/sheet/publishedrange/9759936cd086398556a705a55a38cf589fe302a0b14085db52890f4783c475bb?type=grid", //ronilson 169
-            "14661770633":"https://sheet.zohopublic.com/sheet/publishedrange/0277b47412b777e8960e253da2b4867ea8df88a3ce0eebfd4419273b0476fbdc?type=grid", //Ricardo Ramos 170 
-            "71114179256":"https://sheet.zohopublic.com/sheet/publishedrange/c3d0aca4e7fea33adced15874712b93fc028e433e6a9fd74e08c46f85a901256?type=grid", //santiago yavet 171
-            "12273999526":"https://sheet.zohopublic.com/sheet/publishedrange/d70e823f3505d077760aff232b7f28b76b7bff42f0c06fe4f3df656145226074?type=grid", // nerivaldo 172
-            "06045019601":"https://sheet.zohopublic.com/sheet/publishedrange/24e1d202b72ae0df87fd3e31dde28923394f814c7620afb3ed8a440f85a91d6a?type=grid", //Paulo roberto 173 
-            "11291612696":"https://sheet.zohopublic.com/sheet/publishedrange/ff9f49092ec6c20a7ad1d6baea7737781015aef6aeaf409fe380c8e65ccc6948?type=grid", //Leandro Marinho 174
-            "61845698649":"https://sheet.zohopublic.com/sheet/publishedrange/5a8676aa319c29ad16af94d78356a40af7ec76a089e5ea5ccef5d2e28e6dd064?type=grid", //jorge andrade correia 175
-            "05404935707":"https://sheet.zohopublic.com/sheet/publishedrange/d08f3ee91967ad8693c06158aabefcb0e4e9005f4f5fb49db8f37c86e1081983?type=grid", //hudson alves 176
-            "12713321670":"https://sheet.zohopublic.com/sheet/publishedrange/a157157c1ec711e4871f7f0bec7681d1ddf28eb423cc67b6eb9a52ae3889235c?type=grid", //carlos junio alves 177
-            "07206157637":"https://sheet.zohopublic.com/sheet/publishedrange/395500aa5b7dde08cebe9b574a26380217061317d20b62a7f1f0aeaf5f2dace2?type=grid", //bruno braga 178
-            "09884899614":"https://sheet.zohopublic.com/sheet/publishedrange/8b236d2da0da67b6aeec55f596d68385bc61c81486281f944a60f4fa6b8eccb4?type=grid", //179 Adalberto 
-            "01902855671":"https://sheet.zohopublic.com/sheet/publishedrange/ec417ba52c598480565269911426d467be09b0231dd72abf7b302ad1e4dee8f8?type=grid", //180 Victor Gabriel Goncalves Barbosa
-            "03031987616":"https://sheet.zohopublic.com/sheet/publishedrange/5bc1c1d195bcb08fb9eda050cbdb5b84f3a9d3053e25f08347548d0844b559ac?type=grid", //Marcio jose de oliveira 181 
-            "13852960622":"https://sheet.zohopublic.com/sheet/publishedrange/df3ff94097331d9e65dad576b5c00c503d8829b7e0db00802662e42b7420c913?type=grid", //ezequiel 182
-            "13241620662":"https://sheet.zohopublic.com/sheet/publishedrange/bb62caaae114a42c8e6c7e315e07a52aea0dba7e0e8003a39e607487e81c3637?type=grid", //Wenderson 183 
-            "04879313602":"https://sheet.zohopublic.com/sheet/publishedrange/9bcfd6823381dab37ae09467648e69b29da7eb416622d66f5cf00ac8f9557346?type=grid", //Romulo da silva cordeiro 184
-            "1222247968":"https://sheet.zohopublic.com/sheet/publishedrange/75e47a5b7cf4fa9d0ff67a0997946777c801a633f603f8a546d02627bba76b82?type=grid", //Luiz augusto 185 
-            "00249535637":"https://sheet.zohopublic.com/sheet/publishedrange/0089e7bcdad18fef0100eee165cdb8366bd32822f96359e9de1554b24ed12a1a?type=grid", // joao gonçalves alves 186
-            "14306072622":"https://sheet.zohopublic.com/sheet/publishedrange/fbd116f0fee144cd0a7ff17c3528e387ef24c54433462e01cde1afe2d7664adb?type=grid", //Italo andre de araujo ezequiel 187
-            "16888795608":"https://sheet.zohopublic.com/sheet/publishedrange/cc721dd03112150c13906cd82e6823700fa0c07f92e9e4e507119dab5d2ec7ae?type=grid", //Cristian 189
-            "02015693610":"https://sheet.zohopublic.com/sheet/publishedrange/dacfee66bc72689be89e780aa7650dbeb785d93176a01cfae2591bdf2dd5f612?type=grid", //Thiago Duarte da Silva Barbosa 190
-            "83239324768":"https://sheet.zohopublic.com/sheet/publishedrange/afc3984ec109e7b667174a250be08ce325eddf11b2d0fd443daa6af781317b8d?type=grid",//Nilton Antonio Pinheiro
-            "12222479681":"https://sheet.zohopublic.com/sheet/publishedrange/3677858beab8f3a054d97c57f74fb502f0d4344460d413001acd14d9717b07fb?type=grid" //193
+        // CPF validation function
+        function validateNumber(input) {
+            input.value = input.value.replace(/[^0-9]/g, '');
+        }
+
+        // Add real-time CPF validation
+        document.getElementById('login').addEventListener('input', function(e) {
+            validateNumber(e.target);
             
+            // Remove error styling when user starts typing
+            if (e.target.classList.contains('error')) {
+                e.target.classList.remove('error');
+                hideMessage('error');
+            }
+        });
+
+        // Add real-time password validation
+        document.getElementById('senha').addEventListener('input', function(e) {
+            if (e.target.classList.contains('error')) {
+                e.target.classList.remove('error');
+                hideMessage('error');
+            }
+        });
+
+        // Show/hide messages
+        function showMessage(type, message) {
+            const errorEl = document.getElementById('errorMessage');
+            const successEl = document.getElementById('successMessage');
             
-            
-            
-                
-          
-
-
-        };
-
-        function logar() {
-            var login = document.getElementById('login').value;
-            var senha = document.getElementById('senha').value;
-            var redirectPage = funcionarios[login];
-
-            var usuarios = {
-                            "10724545808": "1072", //0.1
-            "05781135626": "5626", //0.2
-            "04715367688": "7688", //0.3
-            "89262557604": "7604", //0.4
-            "83491635691": "5691", //0.5
-            "87931494687": "4687", //0.6
-            "71095652206": "2206", //0.9
-            "05095055627": "0509", //0.10 ALLISON
-            "14045578650": "8650", //0.11
-            "84533560172": "8453", //0.14 APARECIDO
-            "02285111606": "0228", //0.15
-            "03624128639": "0362", //0.16
-            "11038817609": "1103", //0.17
-            "05095170647": "0509", //0.18 CARLOS EDUARDO
-            "04489672608": "0448", //0.20
-            "14416399693": "1441", //0.22
-            "09842867641": "0984", //0.23 DARCILIO
-            "57837805372": "5783", //0.24
-            "14165008630": "1416", //0.25 DIEGO DIAS 
-            "16581100641": "1658", //0.27
-            "17205361630": "1720", //0.28
-            "09358465654": "0935", //0.30
-            "71197083251": "3251", //0.32
-            "77738063653": "7773", //0.37
-            "07060857605": "0706", //0.38
-            "11817465660": "xxxx", //0.40
-            "14501942657": "1450", //0.41
-            "02104434645": "0210", //0.43
-            "12755950650": "1275", //0.44
-            "02070377601": "0207", //0.45
-            "68351780600": "6835", //0.46 JAIR 
-            "09297713629": "0929", //0.48 JECKSON
-            "03661796674": "0366", //0.49
-            "63840782600": "6384", //0.50
-            "02285104650": "4650", //0.52
-            "01267479620": "0126", //0.57 Coleta 
-            "03246589666": "0324", //0.58 Jose paulo
-            "96297905649": "9629", //0.60
-            "08919711577": "0891", //0.61
-            "78117992604": "2604", //0.62
-            "07089072614": "0708", //0.63 junio 
-            "10068713657": "3657", //0.66 Luciano simoa 
-            "05616002607": "0561", //0.67
-            "07316544635": "0731", //0.68
-            "70316269603": "9603", //0.69
-            "12060789605": "1206", //0.70 MARCELO 
-            "67331904604": "6733", //0.71 MARCIO
-            "14258052647": "1425", //0.72 marcos eduardo
-            "14800370604": "0604", //0.74
-            "14676238657": "8657", //0.75
-            "13735769608": "1373", //0.76 MAURICIO GOMES 
-            "13109538644": "1310", //0.77
-            "17421529616": "9616", //0.79 MIKE VINICIUS 
-            "13432388624": "1343", //0.80
-            "04018693699": "0401", //0.82 NORIVAL 
-            "13942915669": "1394", //0.84
-            "04841095454": "0484", //0.85 PAULO THIAGO 
-            "15615463643": "1561", //0.86
-            "09900488610": "xxxx", //0.87
-            "41802209620": "4180", //0.89
-            "14251564600": "1425", //0.90
-            "10858662620": "1085", //0.91
-            "02360300601": "0236", //0.93
-            "10800237633": "1080", //0.94 Rodrigo 
-            "08051131690": "0805", //0.95 rogerio
-            "14895385698": "5698", //0.96 Sancler 
-            "05895020690": "0589", //0.98
-            "65068882615": "6506", //0.99
-            "11400241677": "1140", //0.105 Walard
-            "08870130584": "0887", //0.107 Warley 
-            "00068904665": "0689", //0.108
-            "01235949605": "0123", //0.109
-            "13795063604": "1379", //0.110
-            "11389201694": "1138", //0.111
-            "14886779646":"1488",//0.114
-            "10387784683": "1038", //0.113
-            "15438288682": "8682", //0.115
-            "seucpf": "123", 
-            "17762224661": "4661", //121
-            "12883036616": "6616", //120
-            "94303495620": "5620", //122
-            "02494781450":"1450", //126 gerson fracnisco
-            "12947219686": "9685", //127
-            "14316251678": "1678", //125
-            "01755313667": "3667", //130
-            "01821936671": "6671", // 131
-            "12595879677": "9677", // 133
-            "19165077601": "7601", // 137
-            "09566573626": "3626", // 140
-            "00782184626": "4626", // 142
-            "14706181682": "1682", // 144
-            "00157078655": "8655", // 147
-            "15558858702": "8702", // 149
-            "02185744607": "4607", // 150
-            "05990209622": "9622", // 151
-            "17446379626": "9626", //Wilton 153
-            "16806028616": "8616", // Gui almeida 154
-            "01067563628": "3628", //Eleazar jose 155
-            "02215370661": "0661", // Gabriel Oliveira 157 
-            "13758323606": "3606", //Oseias da Silva 158
-            "10912073640": "3640", //Kaique vitor dos santos 160
-            "01114542636": "2636", // YOSMAR JOSE 162
-            "03518627651": "7651", //DICKSON 163
-            "17338882681": "2681", // Rafael de souza 164
-            "09062739784": "9784", //Saulo Roriz de Assis
-            "08369953336": "3336", // Danielson 168 
-            "12595893661": "3661", //ronalison 169
-            "14661770633": "0633", //ricardo ramos 170
-            "71114179256": "9256", //Santiago yavet 171
-            "12273999526": "9526", //nerivaldo silva 172 
-            "70804910294": "0294", //enso hernandez 166
-            "06045019601": "9601", // PAULO ROBERTO 173 
-            "11291612696": "2696", //Leandro Marinho 174
-            "61845698649": "8649", //Jorge andrade correia 175
-            "05404935707": "5707", // Hudson alves 176
-            "12713321670": "1670", //carlos junio alves 177
-            "07206157637": "7637", //bruno braga evangelista 178
-            "09884899614": "9614", //Adalberto Vinicio de Souza 179
-            "01902855671": "5671", //Victor Gabriel 180
-            "03031987616": "7616", //Marcio jose 181 
-            "13852960622": "0622", //ezequiel 182 
-            "13241620662": "1324", //Wenderson OPerador 183 
-            "04879313602": "0487", //Romulo da silva cordeiro 184
-            "1222247968": "7968", //Luiz augusto 185 
-            "00249535637": "5637", //joao gonçalve 186
-            "14306072622": "2622", //Italo andre de araujo ezequiel 187
-            "16888795608": "5608", // Cristian 189
-            "02015693610": "3610", //Thiago durate 190
-            "83239324768": "4768", //NILTON ANTONIO 191
-            "10460599631": "9631", // Ramon 192
-            "12222479681": "9681" // luiz augusto 193             
-            
-            
-            
-
-            
-
-
-
-
-
-            };
-
-            if (usuarios.hasOwnProperty(login) && senha === usuarios[login]) {;
-                window.location.href = redirectPage; 
-            } else if (redirectPage) {
-                alert('Usuário ou senha incorretos');
+            if (type === 'error') {
+                errorEl.textContent = message;
+                errorEl.style.display = 'block';
+                successEl.style.display = 'none';
             } else {
-                alert('Usuário não encontrado');
+                successEl.textContent = message;
+                successEl.style.display = 'block';
+                errorEl.style.display = 'none';
+            }
+        }
+
+        function hideMessage(type) {
+            if (type === 'error') {
+                document.getElementById('errorMessage').style.display = 'none';
+            } else {
+                document.getElementById('successMessage').style.display = 'none';
+            }
+        }
+
+        // Enhanced login function with better UX
+        function logar() {
+            const loginInput = document.getElementById('login');
+            const senhaInput = document.getElementById('senha');
+            const loginBtn = document.getElementById('loginBtn');
+            const loading = document.getElementById('loading');
+            
+            const login = loginInput.value.trim();
+            const senha = senhaInput.value.trim();
+            
+            // Reset previous states
+            loginInput.classList.remove('error', 'success');
+            senhaInput.classList.remove('error', 'success');
+            hideMessage('error');
+            hideMessage('success');
+            
+            // Validation
+            if (!login) {
+                loginInput.classList.add('error');
+                showMessage('error', 'Por favor, digite seu CPF');
+                loginInput.focus();
+                return false;
             }
             
+            if (login.length !== 11) {
+                loginInput.classList.add('error');
+                showMessage('error', 'CPF deve conter 11 dígitos');
+                loginInput.focus();
+                return false;
+            }
+            
+            if (!senha) {
+                senhaInput.classList.add('error');
+                showMessage('error', 'Por favor, digite sua senha');
+                senhaInput.focus();
+                return false;
+            }
+            
+            // Show loading state
+            loading.classList.add('active');
+            loginBtn.disabled = true;
+            
+            // Simulate loading delay for better UX
+            setTimeout(() => {
+                const funcionarios = {
+                    "10724545808": "https://sheet.zohopublic.com/sheet/publishedrange/8d0da2ef261ec7f6b8305fa440bccf79cb151f704698302d55b13b06281231ea?type=grid", //0.1
+                    "05781135626": "https://sheet.zohopublic.com/sheet/publishedrange/f93ecd0f784cc6996210be2bf420043aac1ce44957738c8ae23fadacf03813e7?type=grid", //188 Adriano
+                    "04715367688": "https://sheet.zohopublic.com/sheet/publishedrange/ef6c028488090be7752c05a1350befe3a1e968e144411dcfe7c290e0030d9d21?type=grid", //0.3 AGNALDO
+                    "89262557604": "https://sheet.zohopublic.com/sheet/publishedrange/aefb98c17937ec59ccd0d36fade914974abd91af2cf7c454a1872636cdd891c0?type=grid", //0.4 AGOSTINHO 
+                    "83491635691": "https://sheet.zohopublic.com/sheet/publishedrange/5406bae4e660e03f691c20a30170850bf63f698e4f6a70f7876059bd8c80a9a4?type=grid", //0.5 ALESSANDRO
+                    "87931494687": "https://sheet.zohopublic.com/sheet/publishedrange/bf1dbea755a2243f18cc1a6a1be65de700b819f9f4d1fc4e6f8b1cf612988abd?type=grid", //0.6 ALEX VIEIRA
+                    "71095652206": "https://sheet.zohopublic.com/sheet/publishedrange/797476e059fed27832ddfa79c03185a5b4c6f8882f62e2b9d4735664a99312e5?type=grid", //0.9 ALEXANDER 
+                    "05095055627": "https://sheet.zohopublic.com/sheet/publishedrange/d2fc584adb6d1aae62c670dbf732e3d960d97099c8e62e0fed9b345ca84fc55c?type=grid", //0.10 ALLISON
+                    "14045578650": "https://sheet.zohopublic.com/sheet/publishedrange/6f52fc4158ceeb5c7a4803407e79c7be6c1d579831e1639dff87cfd50359b98c?type=grid", //0.11 ANANIAS 
+                    "84533560172": "https://sheet.zohopublic.com/sheet/publishedrange/0b4782ad35204006aa22257218e216fdf8c2a636c9dcee9861a0da4eb3224051?type=grid", //0.14 APARECIDO
+                    "02285111606": "https://sheet.zohopublic.com/sheet/publishedrange/fb76d426636a974a6924966210e651128c3e8dd45c05fcc7760ba45ff6c26585?type=grid", //0.15 BRENO. M 
+                    "03624128639": "https://sheet.zohopublic.com/sheet/publishedrange/705453618f3b3eddd6ccb1525aff7913448646cad90e9cd588016d0fd2f5518e?type=grid", //0.16 CARLINOD
+                    "11038817609": "https://sheet.zohopublic.com/sheet/publishedrange/cd1646334feedb7d1b02889cc88d3a398b1deb2a2834e404149b8b9e69d1a0f0?type=grid", //0.17 CARLOS ALEXANDRE
+                    "05095170647": "https://sheet.zohopublic.com/sheet/publishedrange/0a0d1be0cd363cafc53733db0724e9a2936acf7ce2adfd655f171b885350e21e?type=grid", //0.18 CARLOS EDUARDO
+                    "04489672608": "https://sheet.zohopublic.com/sheet/publishedrange/c1cf6d08205a25ee0f43444aecdcba1d2253ce3423dea185a3d6b1d9e959021c?type=grid", //0.20 CLAUDIO I 
+                    "14416399693": "https://sheet.zohopublic.com/sheet/publishedrange/98d3ffb3d4f9f0ff59d0cf304afa2c49e3a7abca5a5fb07a84a2f708bdffdc01?type=grid", //0.22 DANIEL
+                    "09842867641": "https://sheet.zohopublic.com/sheet/publishedrange/f859a180ba85251b8f44ba47e2888df9432703a2a3358a5387c303d51368acbd?type=grid", //0.23 DARCILIO
+                    "57837805372": "https://sheet.zohopublic.com/sheet/publishedrange/3a407f0095d82514b8bf482bf72b41a51ee072953f925fddc53d7474aa806051?type=grid", //0.24 DELMAR 
+                    "14165008630": "https://sheet.zohopublic.com/sheet/publishedrange/eced9e277e827026c82144a92642eacb04d2425a34803bff254099fb6a2742df?type=grid", //0.25 DIEGO
+                    "16581100641": "https://sheet.zohopublic.com/sheet/publishedrange/437c19f98922f384b398123e22dfc148f8858c5457c8774942e69b87e180d186?type=grid", //0.27 DOUGLAS
+                    "17205361630": "https://sheet.zohopublic.com/sheet/publishedrange/d64418ecf1a96e86d42705a37645c0a8bfda12482e65246136c6b4e0fc060a64?type=grid", //0.28 DOUGLAS JUNIO 
+                    "09358465654": "https://sheet.zohopublic.com/sheet/publishedrange/532c997beab071990045c983656df0cdd444167d59de03113a32c400c265c0eb?type=grid", //0.30 DOUGLAS WALLACE 
+                    "71197083251": "https://sheet.zohopublic.com/sheet/publishedrange/b00cecc22129d88dcfcd280f65f42986faf4d17a4b5a296c3ac8b76a32ccdcb1?type=grid", //0.32 EDWIN 
+                    "77738063653": "https://sheet.zohopublic.com/sheet/publishedrange/45968313cbc86d319419cbb22e68c42f5d819162861a2fd2226b831cf8f4c4ff?type=grid", //0.37 FRANCISCO SALES 
+                    "07060857605": "https://sheet.zohopublic.com/sheet/publishedrange/77973aeee94ac126576045546d2393ea38afd3ae42f71b377fbe7cd6c7dda71b?type=grid", //0.38 GILMAR GOMES 
+                    "14501942657": "https://sheet.zohopublic.com/sheet/publishedrange/34e241d08502fa85e80aaea60f58db25f1c7b1297aefcbb242078a4255f49c4e?type=grid", //0.41 GUILHERME HENRIQUE 
+                    "02104434645": "https://sheet.zohopublic.com/sheet/publishedrange/7a9e8f3e8ecd8874f604f79a81c0fcdc0c5c48cd63df84f1975b15080e21ab39?type=grid", //0.43 GUSTAVO MONTEIRO 
+                    "12755950650": "https://sheet.zohopublic.com/sheet/publishedrange/c8c9ab6cd9465e92eaae47399d745a74c5306fe44c612a4d9f9139cfbf3151d2?type=grid", //0.44 IGOR MONTEIRO 
+                    "02070377601": "https://sheet.zohopublic.com/sheet/publishedrange/bdf4e1924b7e2081fa05ccc62c84e2b1a6ea69299d1aa1a668e696ca9fa6357d?type=grid", //0.45 ISRAEL DA SILVA 
+                    "68351780600": "https://sheet.zohopublic.com/sheet/publishedrange/ec67fd41466dd5e7e9b04c4aeb167515a3699f2335f8aca5290ed57bd0943169?type=grid", //0.46 JAIR SILVEIRA 
+                    "09297713629": "https://sheet.zohopublic.com/sheet/publishedrange/68d3753867b432b1f97c8b4e31514db26608a095c063a9b5da6151b54b9d62a5?type=grid", //0.48 JECKSON GOMES 
+                    "03661796674": "https://sheet.zohopublic.com/sheet/publishedrange/60140a8a878c2c88514a8bf4f110c42f20bac6b1d8e4d5a03ce36a46639fbcd1?type=grid", //0.49 JERRI
+                    "63840782600": "https://sheet.zohopublic.com/sheet/publishedrange/7958fbd5481eb089ae07c3d65ca95d9a7ff8e8af54026311b5e1963c369e64ad?type=grid", //0.50 JESSE 
+                    "02285104650": "https://sheet.zohopublic.com/sheet/publishedrange/17a5ea5d3cb36b35050ab88fc80d11c5f8637d3e61b50d7415bbae3135991316?type=grid", //0.52 João Victor 
+                    "01267479620": "https://sheet.zohopublic.com/sheet/publishedrange/e28a1b89a013fbfb28456a6d2511864c6b26fa3b31b5949133993df665b095b4?type=grid", //0.57 COLETA 
+                    "03246589666": "https://sheet.zohopublic.com/sheet/publishedrange/b13c086d3d1f5c90d00b619252b0681652ffccded68e9c94909f89a2d886c56e?type=grid", //0.58 JOSE PAULO 
+                    "96297905649": "https://sheet.zohopublic.com/sheet/publishedrange/b7166bb9a3fff073c3ac642924a9565243e6bf43f8cd447f5a048535a26c6b6c?type=grid", //0.60 JUAREZ 
+                    "08919711577": "https://sheet.zohopublic.com/sheet/publishedrange/33ff4be058d6c8242b34593285fc3409f13f9d0c7be57e0205c9af97999ef45c?type=grid", //0.61 JULIANO 
+                    "78117992604": "https://sheet.zohopublic.com/sheet/publishedrange/c5507159577f38207291fd4959e3e9866a537b7eaf8672149ee97aabbf6711dc?type=grid", //0.62 JULIO 
+                    "07089072614": "https://sheet.zohopublic.com/sheet/publishedrange/c471d9d570f1b01c6505bebe99f07dcb0d398363a28dda1aa49bfb0189a51c64?type=grid", //0.63 JUNIO 
+                    "10068713657": "https://sheet.zohopublic.com/sheet/publishedrange/b96bd28100334d640d7dcc0bc05e805fff635aba4f93d605d089de70a3ed31b3?type=grid", //0.66 LUCIANO SIMOA 
+                    "05616002607": "https://sheet.zohopublic.com/sheet/publishedrange/0b31c4b04f9909dceaaf10abe54335a08bd2544368dcd672abe136c42a75f0a1?type=grid", //0.67 LUCIANO VINCIIUS 
+                    "07316544635": "https://sheet.zohopublic.com/sheet/publishedrange/2b63d494126b7b586d0a2c2a9064906c52f12fe83f9555054cb264d57da1449c?type=grid", //0.68 LUIZ CARLOS JESUS 
+                    "70316269603": "https://sheet.zohopublic.com/sheet/publishedrange/75b0759a6549374509e60fd90a819629deb8a6b004d64d4a85795a7b32cd1dab?type=grid", //0.69 LUIZ HENRIQUE 
+                    "12060789605": "https://sheet.zohopublic.com/sheet/publishedrange/fc66eb67343c45fa67787d4f89d43e388f5153b516d19df4aef3e46f6a7c5f0e?type=grid", //0.70 MARCELO DOS SANTOS 
+                    "67331904604": "https://sheet.zohopublic.com/sheet/publishedrange/dd4c85236f9278848944d32adfbea461cb979cc2af10e6ecc7618a19a90051c6?type=grid", //0.71 MARCIO JOSE 
+                    "14258052647": "https://sheet.zohopublic.com/sheet/publishedrange/5a48381487558ce9a542a57ca5446fec24b6271e45e23e8b31d098604f6ce671?type=grid", //0.72 MARCOS EDUARDO 
+                    "14800370604": "https://sheet.zohopublic.com/sheet/publishedrange/cdb680a8a3c86dbf150c3b9688add3a9d9dc4fdcbbe976279a33abd1defcb7eb?type=grid", //0.74 MARLON 
+                    "14676238657": "https://sheet.zohopublic.com/sheet/publishedrange/34687e9069b598b5734a855ebbde0f2c9c56e689d0fe0a21e35ffdf3f8ce3593?type=grid", //0.75 MATEUS 
+                    "13735769608": "https://sheet.zohopublic.com/sheet/publishedrange/c1595d6cc15d88b489c3f052fd2b32938344ba6a4ba2c3122f7784fa7a870df1?type=grid", //0.76 MAURICIO
+                    "13109538644": "https://sheet.zohopublic.com/sheet/publishedrange/8e68deb60fa67bf6f73633b42d86c2dbada44fc9f62583faf96bb5f08db564bd?type=grid", //0.77 MICHAEL
+                    "17421529616": "https://sheet.zohopublic.com/sheet/publishedrange/2bc1636fc5d32c0aee464b58da048dbf2c1c99e248705cdc7e9314f308710260?type=grid", //0.79 MIKE VINICIUS 
+                    "13432388624": "https://sheet.zohopublic.com/sheet/publishedrange/6e913526a539b6102238626e0f8dce746c9047c50547e94d42243f93eb2ace35?type=grid", //0.80 NADSON 
+                    "04018693699": "https://sheet.zohopublic.com/sheet/publishedrange/1b266def772e4a6da49ad5aa67fa3bf32c1dc85abba50f2df2396a1161fcf8dd?type=grid", //0.82 NORIVAS 
+                    "13942915669": "https://sheet.zohopublic.com/sheet/publishedrange/ebdb480c90c5fc75ada38326703518ed23a4173ace186392730cfda49fbde9f4?type=grid", //0.84 PAULO S PARAGUASSU
+                    "04841095454": "https://sheet.zohopublic.com/sheet/publishedrange/45f540007253c9bccedcbb701ce4cdaffe3ac3d19eb5f7689238b12df96bf5a2?type=grid", //0.85 PAULO THIAGO SEVERO
+                    "15615463643": "https://sheet.zohopublic.com/sheet/publishedrange/5109b61e658bd26dc30f4648f1c216f2e1dac0490ea7939b4c3c717b65cd5451?type=grid", //0.86 PEDRO HENRIQUE 
+                    "41802209620": "https://sheet.zohopublic.com/sheet/publishedrange/76b84b20e5b9416893f2784074c209bb74159de7f34b7da17e47e16c90652166?type=grid", //0.89 RAIMUNDO 
+                    "14251564600": "https://sheet.zohopublic.com/sheet/publishedrange/0457ab1389fb4ab42a23d8323c31f2b72ff71307eb20bed0b78b29c7cd153ad6?type=grid", //0.90 REINALDO 
+                    "10858662620": "https://sheet.zohopublic.com/sheet/publishedrange/719a1ea662b04bf5adb4cae90cc8b93c6a6c9485c16726426d28ba17c5ee3e72?type=grid", //0.91 RENATO M 
+                    "02360300601": "https://sheet.zohopublic.com/sheet/publishedrange/de6e2ef6dfd41283c897faec9fa93f5fe5b9d8868a6a5eafb914dda0514cad50?type=grid", //0.93 RENATO V 
+                    "10800237633": "https://sheet.zohopublic.com/sheet/publishedrange/7819f34c64a460ecf71876305911c97b2ddbf06204ea777ca251efb86cc46ac3?type=grid", //0.94 RODRIGO 
+                    "14895385698": "https://sheet.zohopublic.com/sheet/publishedrange/5ba8b1c8f70141deca5223078d50a738fa77cbd256901af0a2f511ef4f3279c0?type=grid", //0.96 SANCLER 
+                    "05895020690": "https://sheet.zohopublic.com/sheet/publishedrange/079f0585176bd259533827f22a9a37e4b6f574518abc4dbbd6a50811d8a6aa51?type=grid", //0.98 STENIO
+                    "65068882615": "https://sheet.zohopublic.com/sheet/publishedrange/7c848a6b37952fcd2e9b65ecb9b71278d844d2c7eb08964e35a44621864e49f3?type=grid", //0.99 TALES 
+                    "12149681633": "https://sheet.zohopublic.com/sheet/publishedrange/47b9996eba47b054c3787cf6743b388d5f02fa53e1530186c0b15090f7eb76bb?type=grid", //0.102 VALTER 
+                    "11400241677": "https://sheet.zohopublic.com/sheet/publishedrange/73677db395670a22e8ad5287de2c7cbe15086da6fe49032ee036a2e31ed977c1?type=grid", //0.105 WALARD LINO
+                    "08870130584": "https://sheet.zohopublic.com/sheet/publishedrange/c0b0dcbdcb0441c6c1cfc4a18393489e0f2692979d2bc314e781e976c8e530d6?type=grid", //0.107 WARLEY 
+                    "00068904665": "https://sheet.zohopublic.com/sheet/publishedrange/d4ae8a9bb494aad85fa9ae821e7dd54fcc4e4e05f197e15e278804074a59853e?type=grid", //0.108 WELBERT 
+                    "01235949605": "https://sheet.zohopublic.com/sheet/publishedrange/17dc700155eccc9273ad690545d467ec4e8597c9b74fe5041776a8c9fa824fc9?type=grid", //0.109 WELTON 
+                    "13795063604": "https://sheet.zohopublic.com/sheet/publishedrange/00a487add3fa42352c36e780818416270ca296c9184c7da8eb4952894d70a8d6?type=grid", //0.110 WILLIAN BARBOSA
+                    "11389201694": "https://sheet.zohopublic.com/sheet/publishedrange/f69e1a0f8b0e5311c8c7c457781285fee3b2fc4f85e917510223e95ece559c13?type=grid", //0.111 WILLIAN F 
+                    "14886779646": "https://sheet.zohopublic.com/sheet/publishedrange/a0f08df426c29d859ba8f5502d20a5968c9227fc7a0e16be38f553ad9f4cea0b?type=grid",//0.114 JOAO P PASCOAL
+                    "10387784683": "https://sheet.zohopublic.com/sheet/publishedrange/b509bed6164269b7dc2d6c388c4e0b4462bea9799c24de9e1912077ec9d16129?type=grid",//0.113 CARLOS ANDRE 
+                    "15438288682": "https://sheet.zohopublic.com/sheet/publishedrange/c7b75157dcce90c0da490fb4c48cdd03d43043ff93ea528ced949e3bbc17d5d3?type=grid",// 0.115 LEANDRO CORREA
+                    "seucpf":"https://sheet.zohopublic.com/sheet/publishedrange/4d3d75f6b562e802525a847a3da3d7d62cfbc16210dfa64e229578aee98c765f?type=grid",
+                    "17762224661":"https://sheet.zohopublic.com/sheet/publishedrange/e908f99f95142deff4968a46883e8f7d18c2f98a2cc38b20dffe28bdde1cb403?type=grid", //121 LUIZ FELIPE 
+                    "12883036616":"https://sheet.zohopublic.com/sheet/publishedrange/c624562bcb9389b25d50bea630510b594fdd199655eedb3a73162a14d6d6e6e7?type=grid", //120 WALLACE 
+                    "94303495620":"https://sheet.zohopublic.com/sheet/publishedrange/27c4e42c97f56b8059c7d113c87e4160d7057abb9b7206b9fa518d12974069d7?type=grid", //122 ADEMILSON
+                    "02494781450":"https://sheet.zohopublic.com/sheet/publishedrange/bd23e6135bfa108c8e6f8fe9c964f14821123dd447336d415c4ff33f4e88aa7a?type=grid", //126 gerson 
+                    "12947219686":"https://sheet.zohopublic.com/sheet/publishedrange/fbfbc8b0797f07e29ead56bcbf8573151a8ab3913089afff16ce5ed876990dd1?type=grid", //0.127 FILIPE 
+                    "14316251678":"https://sheet.zohopublic.com/sheet/publishedrange/c1d5aa242f01b6e76f644580a4337c130637abb17541016f1fb8905db748be0b?type=grid", //0.125 ally son 
+                    "01821936671":"https://sheet.zohopublic.com/sheet/publishedrange/20dbf03ff44ee5112b409e8358e019d974b475e6d9bd7b01995f9dbf5675a461?type=grid", //0.131 GIANDERSON 
+                    "12595879677":"https://sheet.zohopublic.com/sheet/publishedrange/488211a6446e819a20c58f58c871d948e7e24fc4f9075df754f6e11f888ce631?type=grid", //0.133 LEONARDO RAMOS 
+                    "19165077601":"https://sheet.zohopublic.com/sheet/publishedrange/b5345aae5692b992ff3fa4b29e2cc0df1a193d6939e56f8a896f04934dadf925?type=grid", //0.137 julio inacio4
+                    "09566573626":"https://sheet.zohopublic.com/sheet/publishedrange/b5643b044b6797f73096c7441db90e20988dadb36a7eb238a0409eee40620c90?type=grid", //0.140 PAULO HENRIQUE 
+                    "00782184626":"https://sheet.zohopublic.com/sheet/publishedrange/3201bf5a9b669fcd21ca125b699bedd56c4b8c0247c2732c4b751bc3016bcdad?type=grid", //0.142 ADILSON 
+                    "00157078655":"https://sheet.zohopublic.com/sheet/publishedrange/b24c7f206769af7375c938b385b8b8530cbfda02998ea30c88cef2c27492461d?type=grid", //0.147 MARCELINO
+                    "15558858702":"https://sheet.zohopublic.com/sheet/publishedrange/0321f04fba6e669c0479cd4289f09b8ffa6831720bb823a36807a5d4b9321bb9?type=grid", //0.149 ALEXANDRE BARBOSA 
+                    "02185744607":"https://sheet.zohopublic.com/sheet/publishedrange/7303144e319ed8ab2e9287449080ffd436dd965b3bcbf04d1b580fbb590bdb97?type=grid", //0.150FAYLON 
+                    "cpf":"link", //0.000
+                    "05990209622":"https://sheet.zohopublic.com/sheet/publishedrange/7234fd3435c491efeda5887ae2a64657b84cd284a7bb88aba5a7dd69d4fe256a?type=grid", //Willian quaresma 151
+                    "17446379626":"https://sheet.zohopublic.com/sheet/publishedrange/940588076d0465ab1befc8cf291ee007cf598415be33895133f76861c1653471?type=grid", //Wilton de Jesus 153
+                    "16806028616":"https://sheet.zohopublic.com/sheet/publishedrange/9663cc2e23244ca5a160e62acb6740589c43e0a81f4966184429d498b466cc2b?type=grid", //guilherme almeida 154 
+                    "01067563628":"https://sheet.zohopublic.com/sheet/publishedrange/1c3ada2afd3e45ac0b0a2e23ce01d3a216e939f9c3b0784d59f215974783f0cb?type=grid", // Eleazar 155
+                    "02215370661":"https://sheet.zohopublic.com/sheet/publishedrange/f6c1ae40311fb5d249e7d8a2f2a87a0e6892ac04c42db18a157ac550a013d906?type=grid", //157 Gabriel alves 
+                    "13758323606":"https://sheet.zohopublic.com/sheet/publishedrange/b66a6a6b4e7e3957ced62baea159e32f2a6be19243a2c873bd3ee2688c9c6f4e?type=grid", //Oseias da Silva //158 
+                    "10912073640":"https://sheet.zohopublic.com/sheet/publishedrange/cdf473466b0439d22c0c61007dbc650ceac2c456dd5ade4f8ea76dd6ee65edc2?type=grid", //Kaique Vitor 
+                    "01114542636":"https://sheet.zohopublic.com/sheet/publishedrange/ae1e8d5e3ad727e9f2ae49c884a21f94f541404dff4bbf95bf55e75e7060c2c9?type=grid", // yomsar jose 162
+                    "03518627651":"https://sheet.zohopublic.com/sheet/publishedrange/6595c390b88286a198de586449485181b7f6ed05b67c0bd9cede0be02041f177?type=grid", //DICKSON 163 
+                    "17338882681":"https://sheet.zohopublic.com/sheet/publishedrange/938146d927f1fa5a7fbd9178cc34f6a20f2fd6b8660d251ff0e32582c947c3be?type=grid", //Rafael de Souza Andrade 164
+                    "09062739784":"https://sheet.zohopublic.com/sheet/publishedrange/b0526a836c177a5592ed09dd68928dcb468fef9d57c131c67024346456bf6715?type=grid", //Saulo Roriz de Assis 165
+                    "70804910294":"https://sheet.zohopublic.com/sheet/publishedrange/2cf0dba01ae5930f53a5dea8899f8e4d27fc65c0bcdc7de57adcb4fe5fb52a17?type=grid", // Enso Henrique Hernandez 166
+                    "08369953336":"https://sheet.zohopublic.com/sheet/publishedrange/59ed09c44efc78190fd7ac3334c967442ac3b6e386f901b919e60930492dab1a?type=grid", //danielson santos campelo 168
+                    "12595893661":"https://sheet.zohopublic.com/sheet/publishedrange/9759936cd086398556a705a55a38cf589fe302a0b14085db52890f4783c475bb?type=grid", //ronilson 169
+                    "14661770633":"https://sheet.zohopublic.com/sheet/publishedrange/0277b47412b777e8960e253da2b4867ea8df88a3ce0eebfd4419273b0476fbdc?type=grid", //Ricardo Ramos 170 
+                    "71114179256":"https://sheet.zohopublic.com/sheet/publishedrange/c3d0aca4e7fea33adced15874712b93fc028e433e6a9fd74e08c46f85a901256?type=grid", //santiago yavet 171
+                    "12273999526":"https://sheet.zohopublic.com/sheet/publishedrange/d70e823f3505d077760aff232b7f28b76b7bff42f0c06fe4f3df656145226074?type=grid", // nerivaldo 172
+                    "06045019601":"https://sheet.zohopublic.com/sheet/publishedrange/24e1d202b72ae0df87fd3e31dde28923394f814c7620afb3ed8a440f85a91d6a?type=grid", //Paulo roberto 173 
+                    "11291612696":"https://sheet.zohopublic.com/sheet/publishedrange/ff9f49092ec6c20a7ad1d6baea7737781015aef6aeaf409fe380c8e65ccc6948?type=grid", //Leandro Marinho 174
+                    "61845698649":"https://sheet.zohopublic.com/sheet/publishedrange/5a8676aa319c29ad16af94d78356a40af7ec76a089e5ea5ccef5d2e28e6dd064?type=grid", //jorge andrade correia 175
+                    "05404935707":"https://sheet.zohopublic.com/sheet/publishedrange/d08f3ee91967ad8693c06158aabefcb0e4e9005f4f5fb49db8f37c86e1081983?type=grid", //hudson alves 176
+                    "12713321670":"https://sheet.zohopublic.com/sheet/publishedrange/a157157c1ec711e4871f7f0bec7681d1ddf28eb423cc67b6eb9a52ae3889235c?type=grid", //carlos junio alves 177
+                    "07206157637":"https://sheet.zohopublic.com/sheet/publishedrange/395500aa5b7dde08cebe9b574a26380217061317d20b62a7f1f0aeaf5f2dace2?type=grid", //bruno braga 178
+                    "09884899614":"https://sheet.zohopublic.com/sheet/publishedrange/8b236d2da0da67b6aeec55f596d68385bc61c81486281f944a60f4fa6b8eccb4?type=grid", //179 Adalberto 
+                    "01902855671":"https://sheet.zohopublic.com/sheet/publishedrange/ec417ba52c598480565269911426d467be09b0231dd72abf7b302ad1e4dee8f8?type=grid", //180 Victor Gabriel Goncalves Barbosa
+                    "03031987616":"https://sheet.zohopublic.com/sheet/publishedrange/5bc1c1d195bcb08fb9eda050cbdb5b84f3a9d3053e25f08347548d0844b559ac?type=grid", //Marcio jose de oliveira 181 
+                    "13852960622":"https://sheet.zohopublic.com/sheet/publishedrange/df3ff94097331d9e65dad576b5c00c503d8829b7e0db00802662e42b7420c913?type=grid", //ezequiel 182
+                    "13241620662":"https://sheet.zohopublic.com/sheet/publishedrange/bb62caaae114a42c8e6c7e315e07a52aea0dba7e0e8003a39e607487e81c3637?type=grid", //Wenderson 183 
+                    "04879313602":"https://sheet.zohopublic.com/sheet/publishedrange/9bcfd6823381dab37ae09467648e69b29da7eb416622d66f5cf00ac8f9557346?type=grid", //Romulo da silva cordeiro 184
+                    "1222247968":"https://sheet.zohopublic.com/sheet/publishedrange/75e47a5b7cf4fa9d0ff67a0997946777c801a633f603f8a546d02627bba76b82?type=grid", //Luiz augusto 185 
+                    "00249535637":"https://sheet.zohopublic.com/sheet/publishedrange/0089e7bcdad18fef0100eee165cdb8366bd32822f96359e9de1554b24ed12a1a?type=grid", // joao gonçalves alves 186
+                    "14306072622":"https://sheet.zohopublic.com/sheet/publishedrange/fbd116f0fee144cd0a7ff17c3528e387ef24c54433462e01cde1afe2d7664adb?type=grid", //Italo andre de araujo ezequiel 187
+                    "16888795608":"https://sheet.zohopublic.com/sheet/publishedrange/cc721dd03112150c13906cd82e6823700fa0c07f92e9e4e507119dab5d2ec7ae?type=grid", //Cristian 189
+                    "02015693610":"https://sheet.zohopublic.com/sheet/publishedrange/dacfee66bc72689be89e780aa7650dbeb785d93176a01cfae2591bdf2dd5f612?type=grid", //Thiago Duarte da Silva Barbosa 190
+                    "83239324768":"https://sheet.zohopublic.com/sheet/publishedrange/afc3984ec109e7b667174a250be08ce325eddf11b2d0fd443daa6af781317b8d?type=grid",//Nilton Antonio Pinheiro
+                    "12222479681":"https://sheet.zohopublic.com/sheet/publishedrange/3677858beab8f3a054d97c57f74fb502f0d4344460d413001acd14d9717b07fb?type=grid" //193
+                };
+
+                const usuarios = {
+                    "10724545808": "1072", //0.1
+                    "05781135626": "5626", //0.2
+                    "04715367688": "7688", //0.3
+                    "89262557604": "7604", //0.4
+                    "83491635691": "5691", //0.5
+                    "87931494687": "4687", //0.6
+                    "71095652206": "2206", //0.9
+                    "05095055627": "0509", //0.10 ALLISON
+                    "14045578650": "8650", //0.11
+                    "84533560172": "8453", //0.14 APARECIDO
+                    "02285111606": "0228", //0.15
+                    "03624128639": "0362", //0.16
+                    "11038817609": "1103", //0.17
+                    "05095170647": "0509", //0.18 CARLOS EDUARDO
+                    "04489672608": "0448", //0.20
+                    "14416399693": "1441", //0.22
+                    "09842867641": "0984", //0.23 DARCILIO
+                    "57837805372": "5783", //0.24
+                    "14165008630": "1416", //0.25 DIEGO DIAS 
+                    "16581100641": "1658", //0.27
+                    "17205361630": "1720", //0.28
+                    "09358465654": "0935", //0.30
+                    "71197083251": "3251", //0.32
+                    "77738063653": "7773", //0.37
+                    "07060857605": "0706", //0.38
+                    "11817465660": "xxxx", //0.40
+                    "14501942657": "1450", //0.41
+                    "02104434645": "0210", //0.43
+                    "12755950650": "1275", //0.44
+                    "02070377601": "0207", //0.45
+                    "68351780600": "6835", //0.46 JAIR 
+                    "09297713629": "0929", //0.48 JECKSON
+                    "03661796674": "0366", //0.49
+                    "63840782600": "6384", //0.50
+                    "02285104650": "4650", //0.52
+                    "01267479620": "0126", //0.57 Coleta 
+                    "03246589666": "0324", //0.58 Jose paulo
+                    "96297905649": "9629", //0.60
+                    "08919711577": "0891", //0.61
+                    "78117992604": "2604", //0.62
+                    "07089072614": "0708", //0.63 junio 
+                    "10068713657": "3657", //0.66 Luciano simoa 
+                    "05616002607": "0561", //0.67
+                    "07316544635": "0731", //0.68
+                    "70316269603": "9603", //0.69
+                    "12060789605": "1206", //0.70 MARCELO 
+                    "67331904604": "6733", //0.71 MARCIO
+                    "14258052647": "1425", //0.72 marcos eduardo
+                    "14800370604": "0604", //0.74
+                    "14676238657": "8657", //0.75
+                    "13735769608": "1373", //0.76 MAURICIO GOMES 
+                    "13109538644": "1310", //0.77
+                    "17421529616": "9616", //0.79 MIKE VINICIUS 
+                    "13432388624": "1343", //0.80
+                    "04018693699": "0401", //0.82 NORIVAL 
+                    "13942915669": "1394", //0.84
+                    "04841095454": "0484", //0.85 PAULO THIAGO 
+                    "15615463643": "1561", //0.86
+                    "09900488610": "xxxx", //0.87
+                    "41802209620": "4180", //0.89
+                    "14251564600": "1425", //0.90
+                    "10858662620": "1085", //0.91
+                    "02360300601": "0236", //0.93
+                    "10800237633": "1080", //0.94 Rodrigo 
+                    "08051131690": "0805", //0.95 rogerio
+                    "14895385698": "5698", //0.96 Sancler 
+                    "05895020690": "0589", //0.98
+                    "65068882615": "6506", //0.99
+                    "11400241677": "1140", //0.105 Walard
+                    "08870130584": "0887", //0.107 Warley 
+                    "00068904665": "0689", //0.108
+                    "01235949605": "0123", //0.109
+                    "13795063604": "1379", //0.110
+                    "11389201694": "1138", //0.111
+                    "14886779646":"1488",//0.114
+                    "10387784683": "1038", //0.113
+                    "15438288682": "8682", //0.115
+                    "seucpf": "123", 
+                    "17762224661": "4661", //121
+                    "12883036616": "6616", //120
+                    "94303495620": "5620", //122
+                    "02494781450":"1450", //126 gerson fracnisco
+                    "12947219686": "9685", //127
+                    "14316251678": "1678", //125
+                    "01755313667": "3667", //130
+                    "01821936671": "6671", // 131
+                    "12595879677": "9677", // 133
+                    "19165077601": "7601", // 137
+                    "09566573626": "3626", // 140
+                    "00782184626": "4626", // 142
+                    "14706181682": "1682", // 144
+                    "00157078655": "8655", // 147
+                    "15558858702": "8702", // 149
+                    "02185744607": "4607", // 150
+                    "05990209622": "9622", // 151
+                    "17446379626": "9626", //Wilton 153
+                    "16806028616": "8616", // Gui almeida 154
+                    "01067563628": "3628", //Eleazar jose 155
+                    "02215370661": "0661", // Gabriel Oliveira 157 
+                    "13758323606": "3606", //Oseias da Silva 158
+                    "10912073640": "3640", //Kaique vitor dos santos 160
+                    "01114542636": "2636", // YOSMAR JOSE 162
+                    "03518627651": "7651", //DICKSON 163
+                    "17338882681": "2681", // Rafael de souza 164
+                    "09062739784": "9784", //Saulo Roriz de Assis
+                    "08369953336": "3336", // Danielson 168 
+                    "12595893661": "3661", //ronalison 169
+                    "14661770633": "0633", //ricardo ramos 170
+                    "71114179256": "9256", //Santiago yavet 171
+                    "12273999526": "9526", //nerivaldo silva 172 
+                    "70804910294": "0294", //enso hernandez 166
+                    "06045019601": "9601", // PAULO ROBERTO 173 
+                    "11291612696": "2696", //Leandro Marinho 174
+                    "61845698649": "8649", //Jorge andrade correia 175
+                    "05404935707": "5707", // Hudson alves 176
+                    "12713321670": "1670", //carlos junio alves 177
+                    "07206157637": "7637", //bruno braga evangelista 178
+                    "09884899614": "9614", //Adalberto Vinicio de Souza 179
+                    "01902855671": "5671", //Victor Gabriel 180
+                    "03031987616": "7616", //Marcio jose 181 
+                    "13852960622": "0622", //ezequiel 182 
+                    "13241620662": "1324", //Wenderson OPerador 183 
+                    "04879313602": "0487", //Romulo da silva cordeiro 184
+                    "1222247968": "7968", //Luiz augusto 185 
+                    "00249535637": "5637", //joao gonçalve 186
+                    "14306072622": "2622", //Italo andre de araujo ezequiel 187
+                    "16888795608": "5608", // Cristian 189
+                    "02015693610": "3610", //Thiago durate 190
+                    "83239324768": "4768", //NILTON ANTONIO 191
+                    "10460599631": "9631", // Ramon 192
+                    "12222479681": "9681" // luiz augusto 193             
+                };
+
+                const redirectPage = funcionarios[login];
+
+                // Reset loading state
+                loading.classList.remove('active');
+                loginBtn.disabled = false;
+
+                if (usuarios.hasOwnProperty(login) && senha === usuarios[login]) {
+                    // Success
+                    loginInput.classList.add('success');
+                    senhaInput.classList.add('success');
+                    showMessage('success', 'Login realizado com sucesso! Redirecionando...');
+                    
+                    setTimeout(() => {
+                        window.location.href = redirectPage;
+                    }, 1500);
+                } else if (redirectPage) {
+                    // Wrong password
+                    loginInput.classList.add('error');
+                    senhaInput.classList.add('error');
+                    showMessage('error', 'CPF ou senha incorretos. Verifique suas credenciais.');
+                    senhaInput.focus();
+                } else {
+                    // User not found
+                    loginInput.classList.add('error');
+                    showMessage('error', 'CPF não encontrado no sistema. Verifique se o CPF está correto.');
+                    loginInput.focus();
+                }
+            }, 1000); // Simulate loading time
+            
+            return false;
         }
+
+        // Form submission handler
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            logar();
+        });
+
+        // Enter key handler for better UX
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                logar();
+            }
+        });
+
+        // Auto-focus on first input when page loads
+        window.addEventListener('load', function() {
+            document.getElementById('login').focus();
+        });
     </script>
 </body>
 </html>
